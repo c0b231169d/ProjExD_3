@@ -5,8 +5,8 @@ import time
 import pygame as pg
 
 
-WIDTH = 1600  # ゲームウィンドウの幅
-HEIGHT = 900  # ゲームウィンドウの高さ
+WIDTH = 1100  # ゲームウィンドウの幅
+HEIGHT = 650  # ゲームウィンドウの高さ
 NUM_OF_BOMBS = 5  # 爆弾の数
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -146,7 +146,7 @@ class Score:
         self.score = 0  # スコア初期値
         self.img = self.fonto.render(f"スコア：{self.score}", True, (0, 0, 255))  # 文字列Surface
         self.rct = self.img.get_rect()
-        self.rct.center = (250, HEIGHT-100)
+        self.rct.center = (100, HEIGHT-50)
 
     def update(self, score: int, screen: pg.Surface):
         self.img = self.fonto.render(f"スコア：{self.score}", True, (0, 0, 255))  # 文字列Surface
@@ -155,7 +155,7 @@ class Score:
 
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
-    screen = pg.display.set_mode((WIDTH, HEIGHT))    
+    screen = pg.display.set_mode((WIDTH, HEIGHT))   
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((900, 400))
     bombs = [Bomb((255, 0, 0), 10) for _ in range(NUM_OF_BOMBS)]
