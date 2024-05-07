@@ -143,7 +143,7 @@ class Score:
     """
     def __init__(self):
         self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)  # フォントの設定
-        self.score = 0  # スコア初期値
+        self.score = 0  # スコアの初期値を設定
         self.img = self.fonto.render(f"スコア：{self.score}", True, (0, 0, 255))  # 文字列Surface
         self.rct = self.img.get_rect()
         self.rct.center = (100, HEIGHT-50)
