@@ -117,7 +117,7 @@ class Bomb:
 
 class Beam:
     """
-    こうかとんからビームがでてくる
+    ビームに関するクラス
     """
     def __init__(self, bird: Bird):
         self.img = pg.transform.rotozoom(pg.image.load("fig/beam.png"), 0, 2.0)  # ビーム画像Surface
@@ -128,7 +128,8 @@ class Beam:
 
     def update(self, screen: pg.Surface):
         """
-        更新移動させる
+        ビームを速度ベクトルself.vx, self.vyに基づき移動させる
+        引数 screen：画面Surface
         """
         if check_bound(self.rct) == (True, True):
             self.rct.move_ip(self.vx, self.vy)
@@ -157,8 +158,11 @@ def main():
             if bird.rct.colliderect(bomb.rct):
                 # ゲームオーバー時に，こうかとん画像を切り替え，1秒間表示させる
                 bird.change_img(8, screen)
+                fonto = pg.font.Font(None, 80)
+                txt = fonto.render("Game Over", True, (255, 0, 0))
+                screen.blit(txt, [WIDTH/2-150, HEIGHT/2])
                 pg.display.update()
-                time.sleep(1)
+                time.sleep(5)
                 return
             if not (beam is None or bomb is None):
                 if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突したら
