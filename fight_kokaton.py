@@ -5,8 +5,8 @@ import time
 import pygame as pg
 
 
-WIDTH = 1100  # ゲームウィンドウの幅
-HEIGHT = 650  # ゲームウィンドウの高さ
+WIDTH = 1600  # ゲームウィンドウの幅
+HEIGHT = 900  # ゲームウィンドウの高さ
 NUM_OF_BOMBS = 5  # 爆弾の数
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -160,7 +160,8 @@ def main():
     bird = Bird((900, 400))
     bombs = [Bomb((255, 0, 0), 10) for _ in range(NUM_OF_BOMBS)]
     score = Score()
-    beam = None
+    # beam = None
+    beams = []
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -169,6 +170,7 @@ def main():
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 beam = Beam(bird)
+                beams.append(beam)
 
         screen.blit(bg_img, [0, 0])
         
@@ -184,20 +186,22 @@ def main():
                 return
             # if not (beam is None or bomb is None):
         for i, bomb in enumerate(bombs):
-            if beam is not None:
+            # if beam is not None:
+            for j, beam in enumerate(beams):
                 if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突したら
-                    beam = None
+                    beams[j] = None
                     bombs[i] = None
                     score.score += 1
                     bird.change_img(6, screen)
                     pg.display.update()
         bombs = [bomb for bomb in bombs if bomb is not None]
+        beams = [beam for beam in beams if beam is not None or beam.rct.left < WIDTH]
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
         for bomb in bombs:
             bomb.update(screen)
-        if beam != None:
+        for beam in beams:
             beam.update(screen)
         score.update(score, screen)
         pg.display.update()
